@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <nav aria-label="breadcrumb">
+        <div class="container-fluid">
+            <ol class="breadcrumb bg-dark text-light p-4">
+                <a href="/viewuser/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-eye"></i>
+                    View</a>
+                <li class="breadcrumb-item"><a href="/">Welcome {{this.email}}</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/registerSubjects">Exam form</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/logout">Log out</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="/contact">Contact</a></li>
+
+            </ol>
+        </div>
+    </nav>
+    {{!-- {{#each rows}} --}}
+
+    <form class="row g-3 needs-validation" method="POST" action="/addsubjects" novalidate>
+        {{> subject-form }}
+    </form>
+    {{!-- {{/each}} --}}
+
+</body>
+
+</html>
