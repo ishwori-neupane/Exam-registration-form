@@ -20,7 +20,6 @@ exports.Subjectsform = (req, res) => {
 
 var user = req.session.user_id;
 console.log(user)
-console.log(user.email)
   console.log('Request Url:' + req.url);
   res.render('StudentDetails');
   
@@ -56,26 +55,37 @@ exports.Subjects = (req, res) => {
 
 exports.SubjectSubmit = (req, res) => {
 
-  var id = req.body.id;
-  var subject = req.body.subject;
-  var subject_code = req.body.subject_code;
-  var barrier_id = req.body.barrier_id;
-  var concorrent_id = req.body.concorrent_id;
-  var credit_hours = req.body.credit_hours;
+  // var id = req.body.id;
+  // var subject = req.body.subject;
+  // var subject_code = req.body.subject_code;
+  // var barrier_id = req.body.barrier_id;
+  // var concorrent_id = req.body.concorrent_id;
+  // var credit_hours = req.body.credit_hours;
   var level_id = req.body.level_id;
-  var program_id = req.body.program_id;
-  var created_at = Date.now()
+  // var program_id = req.body.program_id;
+  // var created_at = Date.now()
   // console.log(created_at)
-  var updated_at = Date.now();
-  var sql = `SELECT * FROM subject WHERE level_id= '1' AND program_id='1'`;
-  console.log(sql)
-  connection.query(sql, function (err, result) {
-        if (err) throw err;
-        console.log(result);
-        console.log("hi")
-        res.render("contact")
-      })
-
+  // aba yesma frontend ko form bata aako  program id ra level id chainxa
+  // var updated_at = Date.now();
+  // var sql = `SELECT * FROM subject WHERE level_id =${req.body.level_id}` ;
+  // console.log(req.session.user_id, "hello")
+  // console.log(sql)
+  // connection.query(sql, function (err, result) {
+  //       if (err) throw err;
+  //       console.log(result);
+  //       console.log("hi")
+  //       res.render("contact")
+  //     })
+      connection.query('SELECT * FROM subject WHERE level_id = ?', [req.body.level_id], (err, rows) => {
+        // When done with the connection, release it
+         if (!err) {
+          console.log(level_id,"hello")
+          res.render('contact', { rows, alert: `${level_id} has been updated.` });
+        } else {
+          console.log(err);
+        }
+        console.log('The data from user table: \n', rows);
+      });
   // console.log(level_id)
   // if (level_id === 1) {
   //   var sql = "SELECT Semester,Exam_Roll_number  FROM user JOIN subject ON subject.level_id = user.Semester";

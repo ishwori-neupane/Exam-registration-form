@@ -173,13 +173,11 @@ exports.update = (req, res) => {
   PU_Registration_num="${PU_Registration_num}", level="${level}", 
   Program="${Program}", Semester="${Semester}", year="${year}"  WHERE id = "${req.params.id}"`
   connection.query(sql,  (err, rows) => {
-
     if (!err) {
       // User the connection
       connection.query('SELECT * FROM user WHERE id = ?', [req.params.id], (err, rows) => {
         // When done with the connection, release it
-        
-        if (!err) {
+         if (!err) {
           res.render('edit-user', { rows, alert: `${first_name} has been updated.` });
         } else {
           console.log(err);
