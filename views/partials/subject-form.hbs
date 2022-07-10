@@ -1,26 +1,67 @@
+{{#each results}}
 
-<div class="col-6">
+<div class="col-6" style="text-align: center; margin-left:10%;">
     <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingInput" value="{{this.program_id}}" placeholder="BEIT"
-            name="program_id">
-        <label for="floatingInput">BEIT</label>
+        <input type="text" class="form-control" id="floatingInput" value="{{this.first_name}}" placeholder="BEIT"
+            name="first_name">
+        <label for="floatingInput">first name</label>
+    </div>
+    <div class="form-floating mb-3 ">
+        <input type="text" class="form-control" id="floatingInput" value="{{this.last_name}}" placeholder="BEIT"
+            name="last_name">
+        <label for="floatingInput">last name</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" value="{{this.PU_Registration_num}}" placeholder="BEIT"
+            name="PU_Registration_num">
+        <label for="floatingInput">Registration_number</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" value="{{this.Exam_Roll_number}}" placeholder="BEIT"
+            name="Exam_roll_no">
+        <label for="floatingInput">Exam Roll nnumber</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" value="{{this.Program}}" placeholder="BEIT"
+            name="Program">
+        <label for="floatingInput">program</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" value="{{this.level}}" placeholder="BEIT"
+            name="level">
+        <label for="floatingInput">level</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" value="{{this.year}}" placeholder="BEIT"
+            name="year">
+        <label for="floatingInput">year</label>
     </div>
 
-    <select name="level_id" class="form-control" id="">
-        <option >Semester </option>
-        <option value="1">Semester First</option>
-        <option value="2">Semester Second</option>
-        <option value="3">Semester Third</option>
-        <option value="4">Semester Fourth</option>
-        <option value="5">Semester Fifth</option>
-        <option value="6">Semester Sixth</option>
-        <option value="7">Semester Seventh</option>
-        <option value="8 ">Semester Eighth</option>
-    </select>
+
+      
+     <div class="form-floating mb-3"></div>
+     <label>Select Level</label>
+        <select name="level_id" class="form-control" required="">
+            <option value="1">Semester First</option>
+            <option value="2">Semester Second</option>
+            <option value="3">Semester Third</option>
+            <option value="4">Semester Fourth</option>
+            <option value="5">Semester Fifth</option>
+            <option value="6">Semester Sixth</option>
+            <option value="7">Semester Seventh</option>
+            <option value="8 ">Semester Eighth</option>
+        </select>
+        
+    </div>
+    {{/each}}
+     
     {{!-- <button type="submit" class="btn btn-primary">Submit</button> --}}
     <div class="col-6 d-flex justify-content-end">
-        <a href="/contact" type="button" class="btn btn-primary 
-    align-self-center">Next</a>
+        {{!-- <a href="/submitstudentdata" type="button" class="btn btn-primary 
+    align-self-center">Next</a> --}}
+    <button  class="btn btn-primary 
+    align-self-center">Next</button>
     </div>
+
 
 </div>

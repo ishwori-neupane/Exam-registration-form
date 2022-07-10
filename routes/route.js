@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controlers/userControllers');
-const selectSubject=require("../controlers/subjectSelect")
+const selectSubject = require("../controlers/subjectSelect")
 
-router.get("/",  userController.view );
+router.get("/", userController.view);
 
 router.get('/viewuser/:id', userController.viewall);
 
@@ -24,10 +24,9 @@ router.post('/', userController.find);
 
 router.get('/StudentDetails', selectSubject.Subjectsform);
 
-router.get('/contact', selectSubject.Subjectsform);
-router.get('/contact', selectSubject.SubjectSubmit);
+router.post('/submitstudentdata', selectSubject.formsubmitfirst);
+router.get('/submitstudentdata1', selectSubject.SubjectSubmit);
 
 // router.post('/StudentDetails', selectSubject.Subjects); 
 
-
-module.exports=router;
+module.exports = router;
