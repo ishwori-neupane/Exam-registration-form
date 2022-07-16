@@ -27,6 +27,10 @@ router.get('/StudentDetails', selectSubject.Subjectsform);
 router.get('/contact', selectSubject.Subjectsform);
 router.get('/contact', selectSubject.SubjectSubmit);
 
+
+router.post('/submitstudentdata', selectSubject.formsubmitfirst);
+router.get('/submitstudentdata1', selectSubject.SubjectSubmit);
+
 // router.post('/StudentDetails', selectSubject.Subjects); 
 
 

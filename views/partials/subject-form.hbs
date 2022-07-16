@@ -1,26 +1,48 @@
+{{#each results}}
 
-<div class="col-6">
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingInput" value="{{this.program_id}}" placeholder="BEIT"
-            name="program_id">
-        <label for="floatingInput">BEIT</label>
+
+<div class="card" style="max-width: 500px;">
+    <div class="row g-0">
+        <div class="col-sm-5">
+            {{!-- <img src="images/sample.svg" class="card-img-top h-100" alt="..."> --}}
+        </div>
+        <div class="col-sm-7">
+            <div class="card-body">
+                <h5 class="card-title">Name: {{this.first_name}} {{this.last_name}}</h5>
+            <p class="card-text">PU Registration Number: {{this.PU_Registration_num}}</p>
+            <p class="card-text">Exam Roll Number: {{this.Exam_Roll_number}}</p>
+            <p class="card-text">PU Registration Number: {{this.Program}}</p>
+            <p class="card-text">PU Registration Number: {{this.level}}</p>
+            <p class="card-text">PU Registration Number: {{this.year}}</p>
+            <a href="#" class="btn btn-primary stretched-link">View Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+ <div class="form-floating mb-3"></div>
+     <label>Select Level</label>
+        <select name="level_id" class="form-control" required="">
+            <option value="1">Semester First</option>
+            <option value="2">Semester Second</option>
+            <option value="3">Semester Third</option>
+            <option value="4">Semester Fourth</option>
+            <option value="5">Semester Fifth</option>
+            <option value="6">Semester Sixth</option>
+            <option value="7">Semester Seventh</option>
+            <option value="8 ">Semester Eighth</option>
+        </select>
+        
     </div>
 
-    <select name="level_id" class="form-control" id="">
-        <option >Semester </option>
-        <option value="1">Semester First</option>
-        <option value="2">Semester Second</option>
-        <option value="3">Semester Third</option>
-        <option value="4">Semester Fourth</option>
-        <option value="5">Semester Fifth</option>
-        <option value="6">Semester Sixth</option>
-        <option value="7">Semester Seventh</option>
-        <option value="8 ">Semester Eighth</option>
-    </select>
-    {{!-- <button type="submit" class="btn btn-primary">Submit</button> --}}
-    <div class="col-6 d-flex justify-content-end">
-        <a href="/contact" type="button" class="btn btn-primary 
-    align-self-center">Next</a>
-    </div>
+{{/each}}
+
+{{!-- <button type="submit" class="btn btn-primary">Submit</button> --}}
+<div class="col-6 d-flex justify-content-end">
+    {{!-- <a href="/submitstudentdata" type="button" class="btn btn-primary 
+    align-self-center">Next</a> --}}
+    <button class="btn btn-primary 
+    align-self-center">Next</button>
+</div>
+
 
 </div>

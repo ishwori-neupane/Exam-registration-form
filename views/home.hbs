@@ -1,4 +1,21 @@
+<nav aria-label="breadcrumb">
+  <div class="container-fluid"></div>
+  <ol class="breadcrumb bg-dark text-white p-4">
 
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/adduser">Add User</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/logout">Logout</a></li>
+
+    <li class="breadcrumb-item active" aria-current="page">
+      <form class="d-flex" method="POST" action="/" novalidate>
+        <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
+        <button class="btn btn-outline-light" type="submit" >Search</button>
+      </form>
+    </li>
+  </ol>
+
+
+</nav>
 {{#if removedUser}}
 <div class="alert alert-success alert-dismissible fade show" role="alert">
   User has been removed.

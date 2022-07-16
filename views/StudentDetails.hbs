@@ -14,7 +14,7 @@
             <ol class="breadcrumb bg-dark text-light p-4">
                 <a href="/viewuser/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-eye"></i>
                     View</a>
-                <li class="breadcrumb-item"><a href="/">Welcome {{this.email}}</a></li>
+                <li class="breadcrumb-item"><a href="/">Welcome {{results.email}}</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><a href="/registerSubjects">Exam form</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><a href="/logout">Log out</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><a href="/contact">Contact</a></li>
@@ -24,7 +24,7 @@
     </nav>
     {{!-- {{#each rows}} --}}
 
-    <form class="row g-3 needs-validation" method="POST" action="/addsubjects" novalidate>
+    <form class="row g-3 needs-validation" method="POST" action="/submitstudentdata" novalidate>
         {{> subject-form }}
     </form>
     {{!-- {{/each}} --}}
