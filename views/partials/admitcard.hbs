@@ -1,0 +1,259 @@
+<html>
+
+<head>
+    <title>Form</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin-left: 5px;
+            margin-right: 10px;
+            /*margin-top: 0px;*/
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        /* Create three equal columns that floats next to each other */
+        .columnnn {
+            float: left;
+            /*width: 33.33%;
+    padding: 5px;*/
+            height: 150px;
+            /*margin-top: 5px;*/
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: small;
+            color: rgb(125, 125, 230);
+            /*background-color:#bbb; /* Should be removed. Only for demonstration */
+        }
+
+        /*Clear floats after the columns */
+        .rowss:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .details:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .year:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .signature:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid;
+            border-collapse: collapse;
+        }
+        /*.row{
+            display: flex !important;
+            flex-direction: row;
+            justify-content: space-around;
+        } */
+    </style>
+</head>
+{{#each rows}}
+<body>
+    <div class="rowss">
+        <div class="columnnn" style="float: left;margin-left:0.5%;">
+            <img src="../logo.jpg" alt="POKHARA UNIVERSITY" width="100" height="100">
+
+
+        </div>
+        <div class="columnnn" style="text-align: center; margin-left: 0%; ">
+            <h4>POKHARA UNIVERSITY<br>Office of the Controller of Examinations<br>
+                Trimnester/Yearly Examination<br>Entrance Card</h4>
+        </div>
+        <div class="columnnn" style="margin-top:2px;  margin-left: 1%;">
+
+            <input type="image" width="100" height="100">
+
+        </div>
+    </div>
+    <form>
+        {{!-- {{this.level_id}} --}}
+        <div class="details" style="margin-left:10%; margin-right:10%">
+
+            <div class="col1" style="float: left; width: 30%; ">
+                <p>Exam Roll No. : {{this.Exam_Roll_number}}</p>
+
+            </div>
+            <div class="col1" style="float:left; ">
+                <p>Exam Center :</p>
+
+            </div>
+        </div>
+        <div class="name">
+            <p>P.U Registration No. : {{this.PU_Registration_num}}</p>
+        </div>
+        <div class="name">
+            <p>Name of the Student: </p>
+        </div>
+        <div class="col1" style="float: left;width: 30%; ">
+            <p>Level : </p>
+
+        </div>
+        <div class="col1" style="float:left;">
+            <p>Program : </p>
+
+        </div>
+        <div class="year">
+            <div class="col1" style="float: left;;width: 30%; clear: both; ">
+                <p>Semester/Trimester/Year :</p>
+
+            </div>
+            <div class="col1" style="float:left; ">
+                <p>Year :</p>
+
+            </div>
+        </div>
+        <div class="college" style="float:none ;clear: both; margin: 0px;padding: 0px;">
+            <p>Name Of the College : Cosmos College of Management and Technology<br>For the appearance in the
+                examination of the following courses as per course registered.</p>
+            <h3>Regular Courses</h3>
+        </div>
+        <div class="regular">
+            <table style="width:auto ; text-align: center; width: 100%;">
+                <tr>
+                    <th style="width: 3%;">S.No.</th>
+                    <th style="width: 10%;">Course Code</th>
+                    <th style="width: auto;">Course Title</th>
+                    <th style="width:10% ;">Credit</th>
+                    <th style="width:10% ;">Remarks</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td></td>
+                    <td>Mathematical Foundation of Computer </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+
+            </table>
+        </div><br>
+
+        <div class="re-register">
+            <table style="width:auto ; text-align: center; clear: both; width: 100%;">
+                <h3>Re-registered courses</h3>
+                <tr>
+                    <th style="width: 3%;">S.No.</th>
+                    <th style="width: 10%;">Course Code</th>
+                    <th style="width: auto;">Course Title</th>
+                    <th style="width:10% ;">Credit</th>
+                    <th style="width:10% ;">Remarks</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="signature" style="margin-top:2%; margin-right:0%;">
+
+            <div class="col1" style="float: left;;width: 30%; ">
+                <p>Signature of the student : </p>
+
+            </div>
+            <div class="col1" style="float:left; margin-left:10% ;">
+                <p>Date :</p>
+
+            </div>
+        </div>
+    </form>
+    {{/each}}
+</body>
+
+</html>

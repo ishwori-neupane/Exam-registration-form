@@ -4,7 +4,6 @@ const {exphbs, engine}=require("express-handlebars");
 const app = express();
 const mysql = require('mysql');
 const bodyParser=require("body-parser");
- const multer = require('multer')
 
 const fileUpload = require('express-fileupload');
 app.use(bodyParser.urlencoded({extended: false}))
@@ -31,20 +30,6 @@ con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
 });
-// default option
-//! Use of Multer
-var storage = multer.diskStorage({
-  destination: (req, file, callBack) => {
-      callBack(null, './public/images/')     // './public/images/' directory name where save the file
-  },
-  filename: (req, file, callBack) => {
-      callBack(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-  }
-})
-
-var upload = multer({
-  storage: storage
-});
 
 
 
@@ -53,9 +38,7 @@ app.use(express.static('upload'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 
-// hbs.registerPartial(path.join(__dirname,'views'),err=>{})
 
-// app.get('/', getDetails);
 app.engine('.hbs', engine({
   defaultLayout: 'main', 
   extname: '.hbs',
@@ -68,6 +51,8 @@ console.log("hello")
 
 app.use('/', router)
 app.use('/student', router)
+
+
 
 const port=process.env.PORT || 3000;
 app.listen(port,(req,res)=>{

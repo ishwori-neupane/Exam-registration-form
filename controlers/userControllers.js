@@ -28,13 +28,19 @@ exports.view = (req, res) => {
             console.log('The data from user table: \n', rows);
         });
 }
-const getDetails = (req, res) => {
 
-    res.render("index")
-    console.log('Request Url:' + req.url);
-}
+exports.profile = function (req, res) {
+    var message = '';
+    var id = req.params.id;
+    var sql = "SELECT * FROM `users` WHERE `id`='" + id + "'";
+    connection.query(sql, function (err, result) {
+        if (result.length <= 0)
+            message = "Profile not found!";
 
-exports.create = async(req, res) => {
+        res.render('add-user', { data: result, message: message });
+    });
+};
+exports.create = async (req, res) => {
     check('username', 'Username field cannot be empty.').notEmpty();
     check('username', 'Username must be between 4-15 characters long.').isLength({ min: 5 });
     check('email', 'The email you entered is invalid, please try again.').isEmail();
@@ -58,53 +64,87 @@ exports.create = async(req, res) => {
     var Exam_Roll_number = req.body.Exam_Roll_number;
     var PU_Registration_num = req.body.PU_Registration_num;
     var level = req.body.level;
-    // var comments = req.body.comments;
     var phone = req.body.phone;
     var Program = req.body.Program;
     var Semester = req.body.Semester;
     var year = req.body.year;
-    // var pass_photo = req.body.pass_photo;
+    var file_src = req.body.file_src;
     var id = req.body.id;
     var status = req.body.status
     var password = req.body.password;
+    // var confirmedPassword=req.body.password;
     const encryptedPassword = await bcrypt.hash(password, 10)
 
-    var confirmedPassword = req.body.confirmedPassword
     let searchTerm = req.body.search;
-   
-    // User the connection
-    var sql = "INSERT INTO users (id, first_name, last_name, email, phone, password, confirmedPassword, status,  Exam_Roll_number, PU_Registration_num, level, Program, Semester, year,file_src) VALUES ('" +
-        id + "','" + first_name + "','" + last_name + "','" + email + "','" + phone + "','" + encryptedPassword + "','" + encryptedPassword + "','" + status + "','" +
-         + Exam_Roll_number + "','" + PU_Registration_num + "','" + level + "','" + Program + "','" + Semester + "','" + year + "','" + file_src + "')";
-    connection.query(sql, (error, rows) => {
-        if (!error) {
-            res.render('add-user', { alert: 'User added successfully.' });
-        } else {
-            console.log(error);
-        }
-        console.log('The data from user table: \n', rows);
-        console.log(encryptedPassword)
-        //  let hashedPassword= await bcrypt.hash(password,8)
-        //  console.log(hashedPassword)
-        // res.render("");
-    })
+    if (!req.files)
+        return res.status(400).send('No files were uploaded.');
+    var file = req.files.uploaded_image;
+    var token=req.body.token;
+    var img_name = file.name;
+    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png" || file.mimetype == "image/gif") {
+
+        file.mv('public/images/upload_images/' + file.name, function (err) {
+
+            if (err)
+                return res.status(500).send(err);
+
+            // User the connection
+            var sql = "INSERT INTO users (id, first_name, last_name, email, phone, password, status,  Exam_Roll_number, PU_Registration_num, level, Program, Semester, year,file_src,token) VALUES ('" +
+                id + "','" + first_name + "','" + last_name + "','" + email + "','" + phone + "','" + encryptedPassword + "','" + status + "','" +
+                + Exam_Roll_number + "','" + PU_Registration_num + "','" + level + "','" + Program + "','" + Semester + "','" + year + "','" + file_src + "','" + year + "','" + token + "')";
+            connection.query(sql, function (err, result) {
+                console.log(result)
+                res.render('add-user', { alert: "User added successfully" });
+            });
+        });
+
+    } else {
+        message = "This format is not allowed , please upload file with '.png','.gif','.jpg'";
+        res.render('', { message: message });
+    }
 
 }
+exports.userdetails = (req, res) => {
+    var result;
+    id = req.params.id;
+    console.log(id);
+    var query1 = `SELECT * FROM subject WHERE 1`;
+    //  console.log(query['id'])
+    connection.query(query1, function(error, results1, fields) {
+        if (error) throw error;
+        if (results1.length > 0) {
+            result = results1;
+        }
+    });
+    var query = `SELECT * FROM users WHERE id="${id}"`;
+    //  console.log(query['id'])
+    connection.query(query, function(error, results, fields) {
+        if (error) throw error;
+        if (results.length > 0) {
+   
+                res.render('StudentDetails', {results ,result});
+        }else{
+            res.redirect('login');
+        }
+    });
+           
+}
+
 exports.view = (req, res) => {
-        // User the connection
-        connection.query('SELECT * FROM users',
-            (err, rows) => {
-                // When done with the connection, release it
-                if (!err) {
-                    let removedUser = req.query.removed;
-                    res.render('view-users', { rows, removedUser });
-                } else {
-                    console.log(err);
-                }
-                console.log('The data from user table: \n', rows);
-            });
-    }
-    // View Users
+    // User the connection
+    connection.query('SELECT * FROM users',
+        (err, rows) => {
+            // When done with the connection, release it
+            if (!err) {
+                let removedUser = req.query.removed;
+                res.render('view-users', { rows, removedUser });
+            } else {
+                console.log(err);
+            }
+            // console.log(' view 1 The data from user table: \n', rows);
+        });
+}
+// View Users
 exports.viewall = (req, res) => {
 
     // User the connection
@@ -114,7 +154,7 @@ exports.viewall = (req, res) => {
         } else {
             console.log(err);
         }
-        console.log('The data from user table: \n', rows);
+        console.log('view The data from user table: \n', rows);
     });
 
 }
@@ -151,7 +191,7 @@ exports.edit = (req, res) => {
 }
 
 // Update User
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
     var email = req.body.email;
@@ -163,15 +203,14 @@ exports.update = (req, res) => {
     var Program = req.body.Program;
     var Semester = req.body.Semester;
     var year = req.body.year;
-    // var pass_photo = req.body.pass_photo;
     var status = req.body.status;
     var password = req.body.password;
-    var confirmedPassword = req.body.confirmedPassword;
+    const encryptedPassword = await bcrypt.hash(password, 10)
     var id = req.params.id;
     // User the connection
     var sql = `UPDATE users SET first_name="${first_name}", 
   last_name="${last_name}", email="${email}", phone="${phone}", 
-   password="${password}", confirmedPassword="${confirmedPassword}", 
+   password="${encryptedPassword}", 
    status="${status}", Exam_Roll_number="${Exam_Roll_number}", 
   PU_Registration_num="${PU_Registration_num}", level="${level}", 
   Program="${Program}", Semester="${Semester}", year="${year}"  WHERE id = "${req.params.id}"`
@@ -198,104 +237,56 @@ exports.update = (req, res) => {
 exports.loginGet = (req, res) => {
     res.render('login-form');
 }
+
 exports.login =async (request, response) => {
-  let email = request.body.email;
-  let password = request.body.password;
-  var hash = bcrypt.hashSync(password, 10);
-  const bcryptPassword = bcrypt.compareSync(password, hash);
-  console.log(bcryptPassword)
-  console.log(email)
-  if (email && bcryptPassword) {
-      var query = `SELECT * FROM users WHERE email="${email}"`;
-      //  console.log(query['id'])
-      connection.query(query, [email, bcryptPassword], function(error, results, fields) {
-          if (error) throw error;
-          if (results.length > 0) {
-              if(!bcrypt.compareSync(password, results[0]['password']))
-              {
-                  response.render("login", { alert: 'Incorrect Username and/or Password!' });
-              }
-              if (email === "ishworineupane@gmil.com" || email === "dt2449148@gmail.com") {
-                  request.session.loggedin = true;
-                  request.session.email = email;
-                  response.redirect('/');
-              } else {
-                  request.session.loggedin = true;
-                  request.session.email = email;
-                  request.session.user_id = results[0].id;
-                  request.session.save(function(err) {
-                      // session saved
-                  })
-
-
-                  console.log(results)
-                      // request.session.username='fahad';
-                      // response.send('<h4>Logged in successfully</h4>');
-                      // response.render("StudentDetails", { results });
-                  response.render("StudentDetails", { results });
-              }
-          } else {
-              response.render("login", { alert: 'Incorrect Username and/or Password!' });
-          }
-          // response.end();
-      });
-  } else {
-      response.render("login", { alert: 'Incorrect Username and/or Password!' });
-      // response.end();
-  }
-};
-// exports.login =async (request, response) => {
-//     let email = request.body.email;
-//     let password = request.body.password;
-//     var hash = bcrypt.hashSync(password, 10);
-//     const bcryptPassword = bcrypt.compareSync(password, hash);
-//     console.log(bcryptPassword)
-//     console.log(email)
-//     if (email && bcryptPassword) {
-//         var query = `SELECT * FROM users WHERE email="${email}"  `;
-//         //  console.log(query['id'])
-//         connection.query(query, [email], function(error, results, fields) {
-//             if (error) throw error;
-//             if (results.length > 0) {
-//                 if (email === "ishworineupane@gmil.com" || email === "dt2449148@gmail.com") {
-//                     request.session.loggedin = true;
-//                     request.session.email = email;
-//                     response.redirect('/');
-//                 } else {
-//                     request.session.loggedin = true;
-//                     request.session.email = email;
-//                     request.session.user_id = results[0].id;
-//                     request.session.save(function(err) {
-//                         // session saved
-//                     })
-
-
-//                     console.log(results)
-//                         // request.session.username='fahad';
-//                         // response.send('<h4>Logged in successfully</h4>');
-//                         // response.render("StudentDetails", { results });
-//                     response.render("StudentDetails", { results });
-//                 }
-//             } else {
-//                 response.render("login", { alert: 'Incorrect Username and/or Password!' });
-//             }
-//             // response.end();
-//         });
-//     } else {
-//         response.render("login", { alert: 'Incorrect Username and/or Password!' });
-//         // response.end();
-//     }
-// };
-
-
+    let email = request.body.email;
+    let password = request.body.password;
+    var hash = bcrypt.hashSync(password, 10);
+    const bcryptPassword = bcrypt.compareSync(password, hash);
+    console.log(bcryptPassword)
+    console.log(email)
+    if (email && bcryptPassword) {
+        var query = `SELECT * FROM users WHERE email="${email}"`;
+        //  console.log(query['id'])
+        connection.query(query, [email, bcryptPassword], function(error, results, fields) {
+            if (error) throw error;
+            if (results.length > 0) {
+                if(!bcrypt.compareSync(password, results[0]['password']))
+                {
+                    response.render("login", { alert: 'Incorrect Username and/or Password!' });
+                }
+                if (email === "ishworineupane@gmil.com" || email === "dt2449148@gmail.com") {
+                    // request.session.loggedin = true;
+                    request.session.adminlogin = '1';
+                    request.session.email = email;
+                    response.redirect('/');
+                } else {
+                   
+                    // console.log(results)
+                        
+                        var resultsid = results[0].id;
+                        console.log(resultsid)
+                        request.session.userlogin = '1';
+                    response.redirect("/user/"+resultsid);
+                }
+            } else {
+                // response.render("login", { alert: 'Incorrect Username and/or Password!' });
+            }
+            // response.end();
+        });
+    } else {
+        response.render("login", { alert: 'Incorrect Username and/or Password!' });
+        // response.end();
+    }
+}
 exports.logout = (req, res, next) => {
-    console.log(new Date(Date.now()))
-    res.cookie("token", null, {
-        expires: new Date(Date.now()),
-        httpOnly: true
-    })
+
+    req.session.destroy(function(err) {
+        // cannot access session here
+      })
+    
     res.redirect("login")
-        // })
+    // })
 
 
 }
@@ -309,7 +300,28 @@ exports.find = (req, res) => {
         } else {
             console.log(err);
         }
-        console.log('The data from user table: \n', rows);
+        console.log(' find The data from user table: \n', rows);
     });
 }
 
+exports.admit = function (req, res) {
+    var message = '';
+    var id = req.params.id;
+    var resultsql2;
+    var resultsql1;
+    var level_id=req.body.level_id;
+    var sql = "SELECT * FROM `users` WHERE `id`='" + id + "'";
+    connection.query(sql, function (err, result) {
+        resultsql1=result;
+        if (result.length <= 0)
+            message = "Profile not found!";
+        console.log(resultsql1, "sql1")
+        
+    });
+    var sql2="Select * FROM 'subject' WHERE level_id='" + level_id +"'";
+    connection.query(sql2,function(error,result2){
+        resultsql2=result2;
+        console.log(resultsql2)
+    })
+    res.render('admitcard', { data: resultsql1 });
+};

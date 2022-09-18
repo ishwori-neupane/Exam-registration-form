@@ -1,5 +1,5 @@
 <nav aria-label="breadcrumb">
-  <div class="container-fluid"></div>
+  <div class="container-fluid">
   <ol class="breadcrumb bg-dark text-white p-4">
 
     <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -13,17 +13,13 @@
       </form>
     </li>
   </ol>
-
+</div>
 
 </nav>
-<div class="view-user p-2">
 
-  {{!-- <div class="row mb-5">
-    <div class="col text-center">
-      <h3 class="text-blue">{{this.first_name}} {{this.last_name}}</h3>
-    </div> --}}
-  </div>
-  <div class="row">
+  <div class="view-user p-2">
+
+  <div class="row" >
     <div class="col">
       <table class="table table-hover table-dark">
         <thead>
@@ -46,15 +42,15 @@
           {{#each rows}}
           <tr>
             <th scope="row">{{this.first_name}}</th>
-            <td>{{this.last_name}}</td>
-            <td>{{this.email}}</td>
-            <td>{{this.phone}}</td>
-            <td>{{this.Exam_Roll_number}}</td>
-            <td>{{this.PU_Registration_num}}</td>
-            <td>{{this.level}}</td>
-            <td>{{this.Program}}</td>
-            <td>{{this.Semester}}</td>
-            <td>{{this.year}}</td>
+            <td scope="row">{{this.last_name}}</td>
+            <td scope="row">{{this.email}}</td>
+            <td scope="row">{{this.phone}}</td>
+            <td scope="row">{{this.Exam_Roll_number}}</td>
+            <td scope="row">{{this.PU_Registration_num}}</td>
+            <td scope="row">{{this.level}}</td>
+            <td scope="row">{{this.Program}}</td>
+            <td scope="row">{{this.Semester}}</td>
+            <td scope="row">{{this.year}}</td>
             <td class="text-middle">
               <a href="/viewuser/{{this.id}}" type="button" class="btn btn-light 
                 btn-small"><i class="bi bi-eye"></i> View</a>
@@ -71,4 +67,5 @@
       </table>
     </div>
 
+  </div>
   </div>

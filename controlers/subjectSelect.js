@@ -1,5 +1,4 @@
 const mysql = require("mysql");
-// const session = require('express-session');
 const path = require('path');
 var bodyParser = require("body-parser");
 const { check, validationResult } = require('express-validator');
@@ -16,28 +15,74 @@ const connection = mysql.createConnection({
 const session = require('express-session');
 
 exports.Subjectsform = (req, res) => {
-  console.log(req.session.user_id, 'dfgzdx');
+  // console.log(req.session.user_id, 'dfgzdx');
 
   var user = req.session.user_id;
-  console.log(user)
+  // console.log(user)
   console.log('Request Url:' + req.url);
   res.render('StudentDetails');
 
 }
 exports.formsubmitfirst = (req, res) => {
-  console.log(req.session.user_id, 'dfgzdx');
+   var user_id=req.params.user_id;
+  var back1 = req.body.back1;
+  var back2 = req.body.back2;
+  var back3 = req.body.back3;
+  var back = back1 + "," + back2 + "," + back3;
 
+  
   var user = req.first_name;
-  console.log(req);
+  // console.log(req);
   var user = req.session.user_id;
+  console.log(user)
+  const query = `SELECT * FROM subject  where level_id=?`;
+  connection.query(query, [req.body.level_id], (err, rows, fields) => {
+    if (!err) {
+      let subjectArray = "";
+      rows.forEach(function (subject) {
+
+        subjectArray = subject.id + "," + subjectArray;
+
+      });
+      console.log(subjectArray);
+
+      let sql2 = `INSERT INTO exam_registration_form (user_id, subject_id, back_id) VALUES ('${user_id}', '${subjectArray}' ,'${back}')`;
+      connection.query(sql2, function (err, result) {
+        if (err) throw err;
+        console.log("1 record inserted"); 
+      });
+    }
+    else {
+      return err;
+    }
+  })
+
   console.log(user)
   console.log('Request Url:' + req.url);
   res.render('StudentDetails');
 
 }
 
-exports.Subjects = (req, res) => {
+// exports.admitCard = (req, res) => {
+//   const query = `SELECT * FROM exam_registration_form where user_id=?`;
+//   console.log("hekk",req.params.id)
+//   connection.query("SELECT * FROM exam_registration_form WHERE user_id=?", req.params.id,function(error, rows,fields) {
+//     if (!error) {
+//       console.log(req.params.id,"tygtrxctryctdx")
+//       res.render("admitcard", {rows});
+//     }else{
+//       console.log(error)
+//     }
+//     console.log("hello i am admit card", rows)
+//   })
 
+//   let sql2 = `SELECT * FROM user`;
+
+
+
+// }
+
+exports.Subjects = (req, res) => {
   var id = req.body.id;
   var subject = req.body.subject;
   var subject_code = req.body.subject_code;
@@ -64,21 +109,40 @@ exports.Subjects = (req, res) => {
 
 }
 
+
 exports.SubjectSubmit = (req, res) => {
-  
   var level_id = req.body.level_id;
-  
+
   connection.query('SELECT * FROM subject WHERE level_id = ?', [req.body.level_id], (err, rows) => {
     // When done with the connection, release it
     if (!err) {
       console.log(level_id, "hello")
-      res.render('contact', { rows, alert: `${level_id} has been updated.` });
+      res.render('submitstudentdata', { rows, alert: `${level_id} has been updated.` });
     } else {
-      console.log(err);
+      console.log(err, "i am error");
     }
+    console.log("hlo hlo")
     console.log('The data from user table: \n', rows);
   });
-  
 
+}
+exports.card=(req,res)=>{
+  res.render("admitcard");
+}
+exports.admitCard = (req, res) => {
+  var level_id = req.body.level_id;
+
+  connection.query('SELECT * FROM subject WHERE level_id = ?', [req.body.level_id],
+   (err, rows) => {
+    // When done with the connection, release it
+    if (!err) {
+      console.log(level_id, "hell1o")
+      res.render('admitcard', { rows, alert: `${level_id} has been updated.` });
+    } else {
+      console.log(err, "i am error");
+    }
+    console.log("hlo hlo")
+    console.log('The data from user table: \n', rows);
+  });
 
 }

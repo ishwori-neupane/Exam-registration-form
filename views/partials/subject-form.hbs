@@ -11,17 +11,22 @@
                 <h5 class="card-title">Name: {{this.first_name}} {{this.last_name}}</h5>
             <p class="card-text">PU Registration Number: {{this.PU_Registration_num}}</p>
             <p class="card-text">Exam Roll Number: {{this.Exam_Roll_number}}</p>
-            <p class="card-text">PU Registration Number: {{this.Program}}</p>
-            <p class="card-text">PU Registration Number: {{this.level}}</p>
-            <p class="card-text">PU Registration Number: {{this.year}}</p>
-            <a href="#" class="btn btn-primary stretched-link">View Profile</a>
+            <p class="card-text">Program: {{this.Program}}</p>
+            <p class="card-text">Level: {{this.level}}</p>
+            <p class="card-text">Year: {{this.year}}</p>
+            <a href="/admitcard/{{this.id}}" class="btn btn-primary stretched-link">View Profile
+            
+            </a>
             </div>
         </div>
     </div>
 </div>
+
  <div class="form-floating mb-3"></div>
      <label>Select Level</label>
-        <select name="level_id" class="form-control" required="">
+        <select name="level_id" id="level_id" class="form-control" required="" onchange="selectbacksubject({{result}})">
+        <option value="" selected>Select</option>
+
             <option value="1">Semester First</option>
             <option value="2">Semester Second</option>
             <option value="3">Semester Third</option>
@@ -33,8 +38,43 @@
         </select>
         
     </div>
+    {{/each}}
+    <h2>Enter the </h2>
+     <div class="form-floating mb-3"></div>
+     <label>Select back subject</label>
+        <select name="back1" class="form-control" >
+        <option value="" selected>Select</option>
 
-{{/each}}
+           
+            {{#each result}}
+            <option value="{{this.id}}">{{this.subject}}</option>
+            {{/each}}
+           
+        </select>
+        <select name="back2" class="form-control" >
+        <option value="" selected>Select</option>
+
+           
+            {{#each result}}
+            <option value="{{this.id}}">{{this.subject}}</option>
+            {{/each}}
+           
+        </select>
+        <select name="back3" class="form-control" >
+        <option value="" >Select</option>
+
+           
+            {{#each result}}
+            <option value="{{this.id}}">{{this.subject}}</option>
+            {{/each}}
+           
+        </select>
+    </div>
+
+
+
+            
+            
 
 {{!-- <button type="submit" class="btn btn-primary">Submit</button> --}}
 <div class="col-6 d-flex justify-content-end">
@@ -46,3 +86,8 @@
 
 
 </div>
+
+<script>
+  
+   
+</script>
