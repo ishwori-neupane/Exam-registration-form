@@ -1,25 +1,25 @@
 <nav aria-label="breadcrumb">
   <div class="container-fluid">
-  <ol class="breadcrumb bg-dark text-white p-4">
+    <ol class="breadcrumb bg-dark text-white p-4">
 
-    <li class="breadcrumb-item"><a href="/">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="/adduser">Add User</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="/logout">Logout</a></li>
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/adduser">Add User</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/logout">Logout</a></li>
 
-    <li class="breadcrumb-item active" aria-current="page">
-      <form class="d-flex" method="POST" action="/" novalidate>
-        <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
-        <button class="btn btn-outline-light" type="submit" >Search</button>
-      </form>
-    </li>
-  </ol>
-</div>
+      <li class="breadcrumb-item active" aria-current="page">
+        <form class="d-flex" method="POST" action="/" novalidate>
+          <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
+          <button class="btn btn-outline-light" type="submit">Search</button>
+        </form>
+      </li>
+    </ol>
+  </div>
 
 </nav>
 
-  <div class="view-user p-2">
+<div class="view-user p-2">
 
-  <div class="row" >
+  <div class="row">
     <div class="col">
       <table class="table table-hover table-dark">
         <thead>
@@ -35,6 +35,7 @@
             <th scope="col">Semester</th>
             <th scope="col">Year</th>
             <th scope="col" colspan="2">STATE</th>
+            <th scope="col" colspan="2">Image</th>
 
           </tr>
         </thead>
@@ -51,6 +52,8 @@
             <td scope="row">{{this.Program}}</td>
             <td scope="row">{{this.Semester}}</td>
             <td scope="row">{{this.year}}</td>
+
+
             <td class="text-middle">
               <a href="/viewuser/{{this.id}}" type="button" class="btn btn-light 
                 btn-small"><i class="bi bi-eye"></i> View</a>
@@ -60,12 +63,15 @@
               <a href="/delete/{{this.id}}" type="button" class="btn btn-light 
                 btn-small"><i class="bi bi-person-x"></i> Delete</a>
             </td>
+            <td scope="row">
+              <img src="images/upload_images/{{this.file_src}}" alt="user" height="100" width="100" srcset="">
             </td>
           </tr>
+
           {{/each}}
         </tbody>
       </table>
     </div>
 
   </div>
-  </div>
+</div>

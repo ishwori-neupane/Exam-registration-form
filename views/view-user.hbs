@@ -66,3 +66,58 @@
   </div>
   {{/each}}
 </div>
+<div class="view-user p-5">
+  {{#each rowsa}}
+  <div class="row mb-5">
+    <div class="col text-center">
+      <h3>{{this.back_d}} {{this.last_name}}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <table class="table table-hover table-dark" border="1">
+        <thead>
+          <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Exam Roll Number</th>
+            <th scope="col">PU Registration Number</th>
+            <th scope="col">Level</th>
+            <th scope="col">Program</th>
+            <th scope="col">Semester</th>
+            <th scope="col">Year</th>
+            <th scope="col" rowspan="3">State</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{this.first_name}}</th>
+            <td>{{this.last_name}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.phone}}</td>
+            <td>{{this.Exam_Roll_number}}</td>
+            <td>{{this.PU_Registration_num}}</td>
+            <td>{{this.level}}</td>
+            <td>{{this.Program}}</td>
+            <td>{{this.Semester}}</td>
+            <td>{{this.Year}}</td>
+            <td class="text-middle">
+              <a href="/viewuser/{{this.id}}" type="button" class="btn btn-light 
+        btn-small"><i class="bi bi-eye"></i> View</a>
+              <a href="/edituser/{{this.id}}" type="button" class="btn btn-light
+         btn-small"><i class="bi bi-pencil"></i>
+                Edit</a>
+              <a href="/{{this.id}}" type="button" class="btn btn-light 
+        btn-small"><i class="bi bi-person-x"></i> Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+

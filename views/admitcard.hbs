@@ -2,7 +2,7 @@
 
 <head>
     <title>Form</title>
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         * {
@@ -57,6 +57,7 @@
             border: 1px solid;
             border-collapse: collapse;
         }
+
         /*.row{
             display: flex !important;
             flex-direction: row;
@@ -64,22 +65,24 @@
         } */
     </style>
 </head>
-{{#each data}}
+
+
 <body>
     <div class="rowss">
         <div class="columnnn" style="float: left;margin-left:0.5%;">
-            <img src="../logo.jpg" alt="POKHARA UNIVERSITY" width="100" height="100">
+            <img src="../images/logo.jpg" alt="POKHARA UNIVERSITY" width="100" height="100">
 
 
         </div>
         <div class="columnnn" style="text-align: center; margin-left: 0%; ">
             <h4>POKHARA UNIVERSITY<br>Office of the Controller of Examinations<br>
                 Trimnester/Yearly Examination<br>Entrance Card</h4>
+            {{#each data}}
+
         </div>
         <div class="columnnn" style="margin-top:2px;  margin-left: 1%;">
 
-            <input type="image" width="100" height="100">
-
+            <img src="../images/upload_images/{{this.file_src}}" width="100" height="100">
         </div>
     </div>
     <form>
@@ -99,26 +102,31 @@
             <p>P.U Registration No. : {{this.PU_Registration_num}}</p>
         </div>
         <div class="name">
-            <p>Name of the Student: </p>
+            <p>Name of the Student: {{this.first_name}} {{this.last_name}}</p>
         </div>
         <div class="col1" style="float: left;width: 30%; ">
-            <p>Level : </p>
+            <p>Level : Bachelor</p>
 
         </div>
         <div class="col1" style="float:left;">
-            <p>Program : </p>
+            <p>Program : {{this.Program}}</p>
 
         </div>
         <div class="year">
             <div class="col1" style="float: left;;width: 30%; clear: both; ">
-                <p>Semester/Trimester/Year :</p>
+                <p>Semester/Trimester/Year :
+
+                    {{this.level}}
+
+                </p>
 
             </div>
             <div class="col1" style="float:left; ">
-                <p>Year :</p>
+                <p>Year : 2022</p>
 
             </div>
         </div>
+        {{/each}}
         <div class="college" style="float:none ;clear: both; margin: 0px;padding: 0px;">
             <p>Name Of the College : Cosmos College of Management and Technology<br>For the appearance in the
                 examination of the following courses as per course registered.</p>
@@ -133,46 +141,52 @@
                     <th style="width:10% ;">Credit</th>
                     <th style="width:10% ;">Remarks</th>
                 </tr>
+                {{!-- {{#times 10}}
+                <span>{{this}}</span>
+                {{/times}} --}}
+
                 <tr>
                     <td>1</td>
-                    <td></td>
-                    <td>Mathematical Foundation of Computer </td>
-                    <td></td>
+                    <td>MTH 212
+                    </td>
+                    <td>Engineering Mathematics III
+                    </td>
+                    <td>3</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
+                    <td>ELX 212 </td>
+                    <td> Logic Circuits</td>
+                    <td>3 </td>
                     <td> </td>
                 </tr>
                 <tr>
                     <td>3</td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
+                    <td>CMP 225</td>
+                    <td> Data Structure and Algorithm</td>
+                    <td>3 </td>
                     <td> </td>
                 </tr>
                 <tr>
                     <td>4</td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
+                    <td>MTH 221 </td>
+                    <td>Probability and Queueing Theory</td>
+                    <td> 2</td>
                     <td> </td>
                 </tr>
                 <tr>
                     <td>5</td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
+                    <td>CMP 213 </td>
+                    <td>Web Technology</td>
+                    <td> 3</td>
                     <td> </td>
                 </tr>
                 <tr>
                     <td>6</td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
+                    <td>ELX 213</td>
+                    <td>Electronic Circuit and Instrumentation</td>
+                    <td> 3</td>
                     <td> </td>
                 </tr>
                 <tr>
@@ -204,24 +218,26 @@
                     <th style="width:10% ;">Remarks</th>
                 </tr>
                 <tr>
+
                     <td>1</td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
+                    <td> MTH112
+                    </td>
+                    <td>Engineering Mathematics I </td>
+                    <td> 3</td>
                     <td> </td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
+                    <td> ENG111</td>
+                    <td>Communication Technique </td>
+                    <td>2 </td>
                     <td> </td>
                 </tr>
                 <tr>
                     <td>3</td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
+                    <td>PHY111 </td>
+                    <td>Physics </td>
+                    <td>3 </td>
                     <td> </td>
                 </tr>
                 <tr>
@@ -248,12 +264,11 @@
 
             </div>
             <div class="col1" style="float:left; margin-left:10% ;">
-                <p>Date :</p>
+                <p>Date :2022-9-22</p>
 
             </div>
         </div>
     </form>
-    {{/each}}
 </body>
 
 </html>

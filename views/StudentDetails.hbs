@@ -12,13 +12,10 @@
     <nav aria-label="breadcrumb">
         <div class="container-fluid">
             <ol class="breadcrumb bg-dark text-light p-4">
-                <a href="/viewuser/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-eye"></i>
-                    View</a>
-                <li class="breadcrumb-item"><a href="/">Welcome {{results.email}}</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="/registerSubjects">Exam form</a></li>
+                <li class="breadcrumb-item" aria-current="page">
+                    <h5>Welcome {{results.email}}</h5>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page"><a href="/logout">Log out</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="/contact">Contact</a></li>
-            
             </ol>
         </div>
     </nav>

@@ -1,31 +1,32 @@
 {{#each results}}
 
+<div class="col">
+    <div class="card" style="max-width: 500px;">
+        <div class="row g-0">
+            <div class="col-sm-5">
+                <img src="./images/sample.svg" class="card-img-top h-100" alt="...">
+            </div>
+            <div class="col-sm-7">
+                <div class="card-body">
+                    <h5 class="card-title">Name: {{this.first_name}} {{this.last_name}}</h5>
+                    <p class="card-text">PU Registration Number: {{this.PU_Registration_num}}</p>
+                    <p class="card-text">Exam Roll Number: {{this.Exam_Roll_number}}</p>
+                    <p class="card-text">Program: {{this.Program}}</p>
+                    <p class="card-text">Level: {{this.level}}</p>
+                    <p class="card-text">Year: {{this.year}}</p>
+                    <a href="/admitcard/{{this.id}}" class="btn btn-primary stretched-link">View Profile
 
-<div class="card" style="max-width: 500px;">
-    <div class="row g-0">
-        <div class="col-sm-5">
-            {{!-- <img src="images/sample.svg" class="card-img-top h-100" alt="..."> --}}
-        </div>
-        <div class="col-sm-7">
-            <div class="card-body">
-                <h5 class="card-title">Name: {{this.first_name}} {{this.last_name}}</h5>
-            <p class="card-text">PU Registration Number: {{this.PU_Registration_num}}</p>
-            <p class="card-text">Exam Roll Number: {{this.Exam_Roll_number}}</p>
-            <p class="card-text">Program: {{this.Program}}</p>
-            <p class="card-text">Level: {{this.level}}</p>
-            <p class="card-text">Year: {{this.year}}</p>
-            <a href="/admitcard/{{this.id}}" class="btn btn-primary stretched-link">View Profile
-            
-            </a>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
- <div class="form-floating mb-3"></div>
-     <label>Select Level</label>
+    <label>Select Level</label><br>
+    <div class="form-floating mb-3">
+
         <select name="level_id" id="level_id" class="form-control" required="" onchange="selectbacksubject({{result}})">
-        <option value="" selected>Select</option>
+            <option value="" selected>Select</option>
 
             <option value="1">Semester First</option>
             <option value="2">Semester Second</option>
@@ -36,58 +37,47 @@
             <option value="7">Semester Seventh</option>
             <option value="8 ">Semester Eighth</option>
         </select>
-        
+        <input type="hidden" value="{{this.id}}" name="user_id">
+
     </div>
+
     {{/each}}
-    <h2>Enter the </h2>
-     <div class="form-floating mb-3"></div>
-     <label>Select back subject</label>
-        <select name="back1" class="form-control" >
-        <option value="" selected>Select</option>
 
-           
+    <label>Select back subject at your own risk</label>
+
+    <div class="form-floating mb-3">
+        <select name="back1" class="form-control">
+            <option value="" selected>Select</option>
+            <br>
+
             {{#each result}}
             <option value="{{this.id}}">{{this.subject}}</option>
             {{/each}}
-           
+
         </select>
-        <select name="back2" class="form-control" >
-        <option value="" selected>Select</option>
+        <select name="back2" class="form-control">
+            <option value="" selected>Select</option>
 
-           
+            <br>
             {{#each result}}
             <option value="{{this.id}}">{{this.subject}}</option>
             {{/each}}
-           
+
         </select>
-        <select name="back3" class="form-control" >
-        <option value="" >Select</option>
+        <select name="back3" class="form-control">
+            <option value="">Select</option>
+            <br>
 
-           
             {{#each result}}
             <option value="{{this.id}}">{{this.subject}}</option>
             {{/each}}
-           
+
         </select>
     </div>
 
-
-
-            
-            
-
-{{!-- <button type="submit" class="btn btn-primary">Submit</button> --}}
-<div class="col-6 d-flex justify-content-end">
-    {{!-- <a href="/submitstudentdata" type="button" class="btn btn-primary 
-    align-self-center">Next</a> --}}
-    <button class="btn btn-primary 
-    align-self-center">Next</button>
-</div>
-
+    <div class="col-6 d-flex justify-content-end">
+        <button class="btn btn-primary 
+         align-self-center">Next</button>
+    </div>
 
 </div>
-
-<script>
-  
-   
-</script>

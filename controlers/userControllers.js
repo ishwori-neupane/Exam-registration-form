@@ -5,6 +5,7 @@ var bodyParser = require("body-parser");
 const { check, validationResult } = require('express-validator');
 const bcrypt = require("bcrypt")
 const sendToken = require("../utils/jwtWebToken");
+const { exit } = require("process");
 
 const connection = mysql.createConnection({
     database: "user",
@@ -30,6 +31,7 @@ exports.view = (req, res) => {
 }
 
 exports.profile = function (req, res) {
+
     var message = '';
     var id = req.params.id;
     var sql = "SELECT * FROM `users` WHERE `id`='" + id + "'";
@@ -41,6 +43,7 @@ exports.profile = function (req, res) {
     });
 };
 exports.create = async (req, res) => {
+    // exit();
     check('username', 'Username field cannot be empty.').notEmpty();
     check('username', 'Username must be between 4-15 characters long.').isLength({ min: 5 });
     check('email', 'The email you entered is invalid, please try again.').isEmail();
@@ -58,6 +61,7 @@ exports.create = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
+    
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
     var email = req.body.email;
@@ -77,35 +81,41 @@ exports.create = async (req, res) => {
 
     let searchTerm = req.body.search;
     if (!req.files)
-        return res.status(400).send('No files were uploaded.');
-    var file = req.files.uploaded_image;
-    var token=req.body.token;
-    var img_name = file.name;
-    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png" || file.mimetype == "image/gif") {
-
-        file.mv('public/images/upload_images/' + file.name, function (err) {
-
-            if (err)
-                return res.status(500).send(err);
-
+                return res.status(400).send('No files were uploaded.');
+        var file = req.files.uploaded_image;
+        var img_name=file.name;
+    
+        if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
+                                 
+            file.mv('public/images/upload_images/'+file.name, function(err) {
+                           
+                if (err)
+                  return res.status(500).send(err);
             // User the connection
-            var sql = "INSERT INTO users (id, first_name, last_name, email, phone, password, status,  Exam_Roll_number, PU_Registration_num, level, Program, Semester, year,file_src,token) VALUES ('" +
+            var sql = "INSERT INTO users (id, first_name, last_name, email, phone, password, status,  Exam_Roll_number, PU_Registration_num, level, Program, Semester, year,file_src) VALUES ('" +
                 id + "','" + first_name + "','" + last_name + "','" + email + "','" + phone + "','" + encryptedPassword + "','" + status + "','" +
-                + Exam_Roll_number + "','" + PU_Registration_num + "','" + level + "','" + Program + "','" + Semester + "','" + year + "','" + file_src + "','" + year + "','" + token + "')";
+                + Exam_Roll_number + "','" + PU_Registration_num + "','" + level + "','" + Program + "','" + Semester + "','" + year + "','" + img_name + "')";
             connection.query(sql, function (err, result) {
-                console.log(result)
-                res.render('add-user', { alert: "User added successfully" });
+                if(!err){
+                    res.render('add-user', { alert: "User added successfully" });
+                }else{
+                 console.log(err)
+                }
+                
             });
         });
 
-    } else {
-        message = "This format is not allowed , please upload file with '.png','.gif','.jpg'";
+    } 
+    else {
+        // message = "This format is not allowed , please upload file with '.png','.gif','.jpg'";
         res.render('', { message: message });
     }
 
 }
+
+
 exports.userdetails = (req, res) => {
-    var result;
+    var result; 
     id = req.params.id;
     console.log(id);
     var query1 = `SELECT * FROM subject WHERE 1`;
@@ -117,8 +127,7 @@ exports.userdetails = (req, res) => {
         }
     });
     var query = `SELECT * FROM users WHERE id="${id}"`;
-    //  console.log(query['id'])
-    connection.query(query, function(error, results, fields) {
+     connection.query(query, function(error, results, fields) {
         if (error) throw error;
         if (results.length > 0) {
    
@@ -148,14 +157,19 @@ exports.view = (req, res) => {
 exports.viewall = (req, res) => {
 
     // User the connection
+     
     connection.query('SELECT * FROM users WHERE id = ?', [req.params.id], (err, rows) => {
-        if (!err) {
-            res.render('view-user', { rows });
-        } else {
-            console.log(err);
-        }
-        console.log('view The data from user table: \n', rows);
+        connection.query(`SELECT * FROM exam_registration_form WHERE user_id="${req.body.user_id}"`,(err,rows)=>{
+
+            if (!err) {
+                res.render('view-user', { rows });
+            } else {
+                console.log(err);
+            }
+            console.log('view The data from user table: \n', rows);
+        })
     });
+    // console.log(rows)
 
 }
 exports.form = (req, res) => {
@@ -198,7 +212,6 @@ exports.update = async (req, res) => {
     var Exam_Roll_number = req.body.Exam_Roll_number;
     var PU_Registration_num = req.body.PU_Registration_num;
     var level = req.body.level;
-    // var comments = req.body.comments;
     var phone = req.body.phone;
     var Program = req.body.Program;
     var Semester = req.body.Semester;
@@ -253,7 +266,7 @@ exports.login =async (request, response) => {
             if (results.length > 0) {
                 if(!bcrypt.compareSync(password, results[0]['password']))
                 {
-                    response.render("login", { alert: 'Incorrect Username and/or Password!' });
+                    response.render("login-form", { alert: 'Incorrect Username and/or Password!' });
                 }
                 if (email === "ishworineupane@gmil.com" || email === "dt2449148@gmail.com") {
                     // request.session.loggedin = true;
@@ -270,12 +283,12 @@ exports.login =async (request, response) => {
                     response.redirect("/user/"+resultsid);
                 }
             } else {
-                // response.render("login", { alert: 'Incorrect Username and/or Password!' });
+                response.render("login-form", { alert: 'Incorrect Username and/or Password!' });
             }
-            // response.end();
+            response.end();
         });
     } else {
-        response.render("login", { alert: 'Incorrect Username and/or Password!' });
+        response.render("login-form", { alert: 'Incorrect Username and/or Password!' });
         // response.end();
     }
 }
@@ -304,24 +317,92 @@ exports.find = (req, res) => {
     });
 }
 
-exports.admit = function (req, res) {
+// exports.admit = function (req, res) {
+//     var message = '';
+//     var id = req.params.id;
+//     var resultsql2;
+//     var resultsql1;
+//     var level_id=req.body.level_id;
+//     var sql = "SELECT * FROM `users` WHERE `id`='" + id + "'";
+//     connection.query(sql, function (err, result) {
+//         resultsql1=result;
+//         if (result.length <= 0)
+//             message = "Profile not found!";
+//         console.log(resultsql1, "sql1")
+        
+//     });
+//     var sql2="Select * FROM 'subject' WHERE level_id='" + level_id +"'";
+//     connection.query(sql2,function(error,result2){
+//         resultsql2=result2;
+//         console.log(resultsql2)
+//     })
+//     res.render('admitcard', { data: resultsql1 });
+// };
+
+exports.admit = function(req, res) {
+
+    subjectdata = [];
     var message = '';
     var id = req.params.id;
-    var resultsql2;
-    var resultsql1;
-    var level_id=req.body.level_id;
-    var sql = "SELECT * FROM `users` WHERE `id`='" + id + "'";
-    connection.query(sql, function (err, result) {
-        resultsql1=result;
-        if (result.length <= 0)
+    console.log(id + "id");
+
+    let resultsql2 = "";
+    let resultsql1 = "";
+    var sql = `SELECT * FROM users WHERE id= "${id}"`;
+    connection.query(sql, function(err, result) {
+
+
+        if (result.length >= 0) {
+            resultsql1 = result;
+            // console.log(result);
             message = "Profile not found!";
-        console.log(resultsql1, "sql1")
-        
+            // console.log(resultsql1);
+
+
+
+
+            var sql1 = `SELECT * FROM exam_registration_form WHERE user_id = "${id}"`;
+            connection.query(sql1, function(error, result1) {
+                if (result1.length >= 0) {
+                    resultsql2 = result1;
+                    // console.log(result);
+                    var subject;
+
+                    result1.forEach(resultsql => {
+                        subject = resultsql['subject_id'].split(',');
+
+                        backsubject = resultsql['back_id'].split(',');
+                        console.log(subject);
+                        // subject.forEach(element => {
+                        // setvalue(subject);
+                        // });
+                        // exit();
+                        res.render('admitcard', { data: resultsql1, data1: subject,backsubject });
+                    });
+                }
+            });
+
+
+            // res.render('admitcard', { data: resultsql1, data1: subject,backsubject });
+        }
+
     });
-    var sql2="Select * FROM 'subject' WHERE level_id='" + level_id +"'";
-    connection.query(sql2,function(error,result2){
-        resultsql2=result2;
-        console.log(resultsql2)
-    })
-    res.render('admitcard', { data: resultsql1 });
+
+
+
+
+
+
+
+
+
 };
+
+exports.changePassword=(req,res)=>{
+    res.render("login-form")
+}
+
+exports.changedPassword=(req,res)=>{
+    res.render("login-form",{alert:"msg"})
+}
+
